@@ -22,11 +22,16 @@ def open_dataset_file_info(file_path=url_):
 
             dataset_info = {
                 'name': dataset.name, # It returns file name
-                'count': dataset.count, # It returns number of bands
-                'bounds': dataset.bounds, # It returns bounderings of the raster
-                'crs_info': dataset.crs.to_dict() if dataset.crs else None, #It returns crs information in WKT
-                'geo_shapes': raster_shapes_list, #It returns raster shapes as list
+                'driver': dataset.profile['driver'],
+                'count': dataset.profile['count'],
+                'dtype': dataset.profile['dtype'],
+                'width': dataset.profile['width'],
+                'height': dataset.profile['height'],
+                'crs': dataset.profile['crs'].to_dict() if dataset.crs else None,
+                'transform': dataset.profile['transform'],
+                'geo_shapes': raster_shapes_list['type'], #It returns raster shapes as list
             }
+
         return dataset_info
     
     except Exception as e:
